@@ -1,0 +1,57 @@
+{
+  "name": "adepem/laravel-assets-upload",
+  "description": "Upload your Laravel public directory to a filesystem with an artisan command",
+  "keywords": [
+    "assets",
+    "upload",
+    "laravel"
+  ],
+  "homepage": "https://github.com/adepem/laravel-assets-upload",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pierre Herissé",
+      "email": "pierre.herisse@adepem.com",
+      "homepage": "https://www.adepem.com",
+      "role": "Developer"
+    },
+    {
+      "name": "François Pradel",
+      "email": "francois.pradel@adepem.com",
+      "homepage": "https://www.adepem.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.4 || ^8.0",
+    "ext-zlib": "*",
+    "spatie/laravel-package-tools": "^1.9"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6.19",
+    "phpunit/phpunit": "^9.5"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Adepem\\AssetsUpload\\AssetsUploadServiceProvider"
+      ]
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Adepem\\AssetsUpload\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Adepem\\AssetsUpload\\Test\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  }
+}
