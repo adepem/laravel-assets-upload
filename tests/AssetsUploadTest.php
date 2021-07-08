@@ -66,7 +66,7 @@ class AssetsUploadTest extends TestCase
         $storage = Storage::fake('foo');
 
         $this->assertFileExists($this->app->publicPath() . DIRECTORY_SEPARATOR . 'index.php');
-        $this->assertEmpty($storage->allFiles());
+        $storage->assertMissing('public/index.php');
 
         $this->artisan("assets:upload")
             ->assertExitCode(Command::SUCCESS);
