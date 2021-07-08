@@ -65,12 +65,13 @@ class AssetsUploadTest extends TestCase
         config()->set('assets-upload.filesystem', 'foo');
         $storage = Storage::fake('foo');
 
+        $this->assertFileExists($this->app->publicPath() . DIRECTORY_SEPARATOR . 'index.php');
         $this->assertEmpty($storage->allFiles());
 
         $this->artisan("assets:upload")
             ->assertExitCode(Command::SUCCESS);
 
-        $this->assertNotEmpty($storage->allFiles());
+        $storage->assertExists('public/index.php');
     }
 
     /** * @test */
