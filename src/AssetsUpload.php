@@ -3,6 +3,7 @@
 namespace Adepem\AssetsUpload;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -38,7 +39,7 @@ class AssetsUpload extends Command
 
         try {
             $disk = Storage::disk(config('assets-upload.filesystem'));
-            $failedUploads = $this->uploadPublicDirectoryToDisk($disk);
+            $failedUploads = $this->uploadDirectoriesToDisk($disk);
         } catch (\Exception $e) {
             $this->error("Error: " . $e->getMessage());
             return self::FAILURE;
@@ -58,12 +59,19 @@ class AssetsUpload extends Command
         return config('assets-upload.filesystem', false) ?? false;
     }
 
-    private function uploadPublicDirectoryToDisk($disk): array
+    private function filesToUpload(): Collection
+    {
+        return collect(config('assets-upload.directories'))->flatMap(function ($directory) {
+            return File::allFiles($this->laravel->basePath($directory));
+        });
+    }
+
+    private function uploadDirectoriesToDisk($disk): array
     {
         $failedUploads = [];
 
         $this->withProgressBar(
-            File::allFiles($this->laravel->publicPath()),
+            $this->filesToUpload(),
             function ($file) use ($disk, &$failedUploads) {
                 $path = $this->getPathForFile($file);
                 $fileContent = $this->getFileContentForFile($file);
