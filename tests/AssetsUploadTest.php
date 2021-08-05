@@ -12,6 +12,13 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class AssetsUploadTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        config()->set('assets-upload.directories', ['public']);
+    }
+
     /** * @test */
     public function it_returns_early_if_environment_is_not_setup()
     {
@@ -56,6 +63,18 @@ class AssetsUploadTest extends TestCase
         $this
             ->artisan("assets:upload")
             ->expectsOutput("Error: Some assets were not uploaded correctly.")
+            ->assertExitCode(Command::FAILURE);
+    }
+
+    /** * @test */
+    public function it_fails_if_directory_does_not_exists()
+    {
+        config()->set('assets-upload.filesystem', 'foo');
+        config()->set('assets-upload.directories', ['bar']);
+        Storage::fake('foo');
+
+        $this
+            ->artisan("assets:upload")
             ->assertExitCode(Command::FAILURE);
     }
 
