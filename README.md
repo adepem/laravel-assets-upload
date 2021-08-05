@@ -1,4 +1,4 @@
-# Publish your assets to a filesystem using an artisan command
+# Publish your assets using an artisan command
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/adepem/laravel-assets-upload.svg?style=flat-square)](https://packagist.org/packages/adepem/laravel-assets-upload)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/adepem/laravel-assets-upload/run-tests?label=tests)](https://github.com/adepem/laravel-assets-upload/actions?query=workflow%3Arun-tests+branch%3Amain)
