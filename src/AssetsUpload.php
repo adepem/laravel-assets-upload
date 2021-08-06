@@ -73,7 +73,7 @@ class AssetsUpload extends Command
         $this->withProgressBar(
             $this->filesToUpload(),
             function ($file) use ($disk, &$failedUploads) {
-                $path = $this->getPathForFile($file);
+                $path = $this->getRelativePathnameForFile($file);
                 $fileContent = $this->getFileContentForFile($file);
                 $options = $this->getOptionsForFileExtension($file);
 
@@ -88,9 +88,9 @@ class AssetsUpload extends Command
         return $failedUploads;
     }
 
-    private function getPathForFile(SplFileInfo $file): string
+    private function getRelativePathnameForFile(SplFileInfo $file): string
     {
-        return 'public' . DIRECTORY_SEPARATOR . $file->getRelativePathname();
+        return Str::of($file->getPathname())->remove(base_path());
     }
 
     private function getFileContentForFile(SplFileInfo $file): string
