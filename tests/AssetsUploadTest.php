@@ -100,7 +100,7 @@ class AssetsUploadTest extends TestCase
         config()->set('assets-upload.cache-control.js', 1337);
 
         $fileDouble = Mockery::mock(SplFileInfo::class, [
-            'getRelativePathname' => 'foo/bar.js',
+            'getPathname' => base_path() . '/public/foo/bar.js',
             'getExtension' => 'js',
             'getContents' => 'some awesome javascript',
         ]);
@@ -109,7 +109,7 @@ class AssetsUploadTest extends TestCase
         $diskDouble = Mockery::mock(Filesystem::class);
         $diskDouble->shouldReceive('put')
             ->once()
-            ->withSomeOfArgs('public/foo/bar.js', [
+            ->withSomeOfArgs('/public/foo/bar.js', [
                 'CacheControl' => 'max-age=1337',
                 'ContentType' => 'application/javascript',
                 'ContentEncoding' => 'gzip'
@@ -128,7 +128,7 @@ class AssetsUploadTest extends TestCase
         config()->set('assets-upload.cache-control.css', 1337);
 
         $fileDouble = Mockery::mock(SplFileInfo::class, [
-            'getRelativePathname' => 'foo/bar.css',
+            'getPathname' => base_path() . '/public/foo/bar.css',
             'getExtension' => 'css',
             'getContents' => 'some awesome css',
         ]);
@@ -137,7 +137,7 @@ class AssetsUploadTest extends TestCase
         $diskDouble = Mockery::mock(Filesystem::class);
         $diskDouble->shouldReceive('put')
             ->once()
-            ->withSomeOfArgs('public/foo/bar.css', [
+            ->withSomeOfArgs('/public/foo/bar.css', [
                 'CacheControl' => 'max-age=1337',
                 'ContentType' => 'text/css',
                 'ContentEncoding' => 'gzip'
@@ -156,7 +156,7 @@ class AssetsUploadTest extends TestCase
         config()->set('assets-upload.cache-control.woff2', 1337);
 
         $fileDouble = Mockery::mock(SplFileInfo::class, [
-            'getRelativePathname' => 'foo/bar.woff2',
+            'getPathname' => base_path() . '/public/foo/bar.woff2',
             'getExtension' => 'woff2',
             'getContents' => 'some awesome font',
         ]);
@@ -165,7 +165,7 @@ class AssetsUploadTest extends TestCase
         $diskDouble = Mockery::mock(Filesystem::class);
         $diskDouble->shouldReceive('put')
             ->once()
-            ->with('public/foo/bar.woff2', 'some awesome font', [
+            ->with('/public/foo/bar.woff2', 'some awesome font', [
                 'CacheControl' => 'max-age=1337',
             ]);
 
@@ -181,7 +181,7 @@ class AssetsUploadTest extends TestCase
         config()->set('assets-upload.filesystem', 'foo');
 
         $fileDouble = Mockery::mock(SplFileInfo::class, [
-            'getRelativePathname' => 'foo.bar',
+            'getPathname' => base_path() . '/public/foo.bar',
             'getExtension' => 'bar',
             'getContents' => 'foobar',
         ]);
@@ -190,7 +190,7 @@ class AssetsUploadTest extends TestCase
         $diskDouble = Mockery::mock(Filesystem::class);
         $diskDouble->shouldReceive('put')
             ->once()
-            ->with('public/foo.bar', 'foobar', []);
+            ->with('/public/foo.bar', 'foobar', []);
 
         Storage::shouldReceive('disk')->andReturn($diskDouble);
 
