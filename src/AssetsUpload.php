@@ -90,7 +90,7 @@ class AssetsUpload extends Command
 
     private function getRelativePathnameForFile(SplFileInfo $file): string
     {
-        return Str::of($file->getPathname())->remove(base_path());
+        return Str::of($file->getPathname())->replaceFirst(base_path(), '');
     }
 
     private function getFileContentForFile(SplFileInfo $file): string
