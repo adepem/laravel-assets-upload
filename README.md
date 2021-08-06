@@ -14,7 +14,7 @@ composer require adepem/laravel-assets-upload
 
 You can publish the config file with:
 ```bash
-php artisan vendor:publish --provider="Adepem\AssetsUpload\AssetsUploadServiceProvider" --tag="laravel-assets-upload-config"
+php artisan vendor:publish --provider="Adepem\AssetsUpload\AssetsUploadServiceProvider" --tag="assets-upload-config"
 ```
 
 This is the contents of the published config file:
